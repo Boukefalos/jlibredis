@@ -2,9 +2,9 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 
-group = 'com.googlecode.jedis'
-archivesBaseName = 'jedis'
-version = '1.5.0'
+group = 'com.github.boukefalos'
+archivesBaseName = 'jlibredis'
+version = '2.6.2'
 
 repositories {
    mavenCentral()
@@ -15,19 +15,12 @@ dependencies {
     compile 'org.apache.commons:commons-pool2:2.0'
 }
 
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.2'
+}
 
-/*
-TODO: Customize for deployment
 uploadArchives {
-    repositories.mavenDeployer {
-        repository(url: "file://localhost/repo/") {
-            authentication(userName: "user", password: "pass")
-        }
-    }
+	repositories.mavenDeployer {
+		repository(url: uri('.maven'))
+	}
 }
-*/
-
-task createWrapper(type: Wrapper) {
-    gradleVersion = '1.8'
-}
-
