@@ -158,38 +158,38 @@ public interface BinaryJedisCommands {
     Set<byte[]> zrevrangeByScore(byte[] key, double max, double min);
 
     Set<byte[]> zrangeByScore(byte[] key, double min, double max, int offset,
-	    int count);
+        int count);
 
     Set<byte[]> zrevrangeByScore(byte[] key, byte[] max, byte[] min);
 
     Set<byte[]> zrangeByScore(byte[] key, byte[] min, byte[] max, int offset,
-	    int count);
+        int count);
 
     Set<byte[]> zrevrangeByScore(byte[] key, double max, double min,
-	    int offset, int count);
+        int offset, int count);
 
     Set<Tuple> zrangeByScoreWithScores(byte[] key, double min, double max);
 
     Set<Tuple> zrevrangeByScoreWithScores(byte[] key, double max, double min);
 
     Set<Tuple> zrangeByScoreWithScores(byte[] key, double min, double max,
-	    int offset, int count);
+        int offset, int count);
 
     Set<byte[]> zrevrangeByScore(byte[] key, byte[] max, byte[] min,
-	    int offset, int count);
+        int offset, int count);
 
     Set<Tuple> zrangeByScoreWithScores(byte[] key, byte[] min, byte[] max);
 
     Set<Tuple> zrevrangeByScoreWithScores(byte[] key, byte[] max, byte[] min);
 
     Set<Tuple> zrangeByScoreWithScores(byte[] key, byte[] min, byte[] max,
-	    int offset, int count);
+        int offset, int count);
 
     Set<Tuple> zrevrangeByScoreWithScores(byte[] key, double max, double min,
-	    int offset, int count);
+        int offset, int count);
 
     Set<Tuple> zrevrangeByScoreWithScores(byte[] key, byte[] max, byte[] min,
-	    int offset, int count);
+        int offset, int count);
 
     Long zremrangeByRank(byte[] key, long start, long end);
 
@@ -202,18 +202,18 @@ public interface BinaryJedisCommands {
     Set<byte[]> zrangeByLex(final byte[] key, final byte[] min, final byte[] max);
 
     Set<byte[]> zrangeByLex(final byte[] key, final byte[] min,
-	    final byte[] max, int offset, int count);
+        final byte[] max, int offset, int count);
 
     Set<byte[]> zrevrangeByLex(final byte[] key, final byte[] max,
-	    final byte[] min);
+        final byte[] min);
 
     Set<byte[]> zrevrangeByLex(final byte[] key, final byte[] max,
-	    final byte[] min, int offset, int count);
+        final byte[] min, int offset, int count);
 
     Long zremrangeByLex(final byte[] key, final byte[] min, final byte[] max);
 
     Long linsert(byte[] key, Client.LIST_POSITION where, byte[] pivot,
-	    byte[] value);
+        byte[] value);
 
     Long lpushx(byte[] key, byte[]... arg);
 

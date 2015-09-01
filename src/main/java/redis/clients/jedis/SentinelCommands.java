@@ -15,10 +15,10 @@ public interface SentinelCommands {
     public String sentinelFailover(String masterName);
 
     public String sentinelMonitor(String masterName, String ip, int port,
-	    int quorum);
+        int quorum);
 
     public String sentinelRemove(String masterName);
 
     public String sentinelSet(String masterName,
-	    Map<String, String> parameterMap);
+        Map<String, String> parameterMap);
 }

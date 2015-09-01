@@ -40,7 +40,7 @@ public interface MultiKeyBinaryRedisPipeline {
     Response<Long> smove(byte[] srckey, byte[] dstkey, byte[] member);
 
     Response<Long> sort(byte[] key, SortingParams sortingParameters,
-	    byte[] dstkey);
+        byte[] dstkey);
 
     Response<Long> sort(byte[] key, byte[] dstkey);
 

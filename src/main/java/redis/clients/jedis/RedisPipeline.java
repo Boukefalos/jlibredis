@@ -67,7 +67,7 @@ public interface RedisPipeline {
     Response<String> lindex(String key, long index);
 
     Response<Long> linsert(String key, BinaryClient.LIST_POSITION where,
-	    String pivot, String value);
+        String pivot, String value);
 
     Response<Long> llen(String key);
 
@@ -146,26 +146,26 @@ public interface RedisPipeline {
     Response<Set<String>> zrangeByScore(String key, String min, String max);
 
     Response<Set<String>> zrangeByScore(String key, double min, double max,
-	    int offset, int count);
+        int offset, int count);
 
     Response<Set<Tuple>> zrangeByScoreWithScores(String key, double min,
-	    double max);
+        double max);
 
     Response<Set<Tuple>> zrangeByScoreWithScores(String key, double min,
-	    double max, int offset, int count);
+        double max, int offset, int count);
 
     Response<Set<String>> zrevrangeByScore(String key, double max, double min);
 
     Response<Set<String>> zrevrangeByScore(String key, String max, String min);
 
     Response<Set<String>> zrevrangeByScore(String key, double max, double min,
-	    int offset, int count);
+        int offset, int count);
 
     Response<Set<Tuple>> zrevrangeByScoreWithScores(String key, double max,
-	    double min);
+        double min);
 
     Response<Set<Tuple>> zrevrangeByScoreWithScores(String key, double max,
-	    double min, int offset, int count);
+        double min, int offset, int count);
 
     Response<Set<Tuple>> zrangeWithScores(String key, long start, long end);
 
@@ -186,22 +186,22 @@ public interface RedisPipeline {
     Response<Double> zscore(String key, String member);
 
     Response<Long> zlexcount(final String key, final String min,
-	    final String max);
+        final String max);
 
     Response<Set<String>> zrangeByLex(final String key, final String min,
-	    final String max);
+        final String max);
 
     Response<Set<String>> zrangeByLex(final String key, final String min,
-	    final String max, final int offset, final int count);
+        final String max, final int offset, final int count);
 
     Response<Set<String>> zrevrangeByLex(final String key, final String max,
-	    final String min);
+        final String min);
 
     Response<Set<String>> zrevrangeByLex(final String key, final String max,
-	    final String min, final int offset, final int count);
+        final String min, final int offset, final int count);
 
     Response<Long> zremrangeByLex(final String key, final String start,
-	    final String end);
+        final String end);
 
     Response<Long> bitcount(String key);
 

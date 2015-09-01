@@ -9,23 +9,23 @@ public class ScanResult<T> {
     private List<T> results;
 
     public ScanResult(String cursor, List<T> results) {
-	this(SafeEncoder.encode(cursor), results);
+    this(SafeEncoder.encode(cursor), results);
     }
 
     public ScanResult(byte[] cursor, List<T> results) {
-	this.cursor = cursor;
-	this.results = results;
+    this.cursor = cursor;
+    this.results = results;
     }
 
     public String getCursor() {
-	return SafeEncoder.encode(cursor);
+    return SafeEncoder.encode(cursor);
     }
 
     public byte[] getCursorAsBytes() {
-	return cursor;
+    return cursor;
     }
 
     public List<T> getResult() {
-	return results;
+    return results;
     }
 }

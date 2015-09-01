@@ -32,83 +32,83 @@ public class RedisInputStream extends FilterInputStream {
     protected int count, limit;
 
     public RedisInputStream(InputStream in, int size) {
-	super(in);
-	if (size <= 0) {
-	    throw new IllegalArgumentException("Buffer size <= 0");
-	}
-	buf = new byte[size];
+    super(in);
+    if (size <= 0) {
+        throw new IllegalArgumentException("Buffer size <= 0");
+    }
+    buf = new byte[size];
     }
 
     public RedisInputStream(InputStream in) {
-	this(in, 8192);
+    this(in, 8192);
     }
 
     public byte readByte() throws JedisConnectionException {
-	ensureFill();
-	return buf[count++];
+    ensureFill();
+    return buf[count++];
     }
 
     public String readLine() {
-	final StringBuilder sb = new StringBuilder();
-	while (true) {
-	    ensureFill();
+    final StringBuilder sb = new StringBuilder();
+    while (true) {
+        ensureFill();
 
-	    byte b = buf[count++];
-	    if (b == '\r') {
-		ensureFill(); // Must be one more byte
+        byte b = buf[count++];
+        if (b == '\r') {
+        ensureFill(); // Must be one more byte
 
-		byte c = buf[count++];
-		if (c == '\n') {
-		    break;
-		}
-		sb.append((char) b);
-		sb.append((char) c);
-	    } else {
-		sb.append((char) b);
-	    }
-	}
+        byte c = buf[count++];
+        if (c == '\n') {
+            break;
+        }
+        sb.append((char) b);
+        sb.append((char) c);
+        } else {
+        sb.append((char) b);
+        }
+    }
 
-	final String reply = sb.toString();
-	if (reply.length() == 0) {
-	    throw new JedisConnectionException("It seems like server has closed the connection.");
-	}
+    final String reply = sb.toString();
+    if (reply.length() == 0) {
+        throw new JedisConnectionException("It seems like server has closed the connection.");
+    }
 
-	return reply;
+    return reply;
     }
 
     public byte[] readLineBytes() {
 
-	/* This operation should only require one fill. In that typical
-	case we optimize allocation and copy of the byte array. In the
-	edge case where more than one fill is required then we take a
-	slower path and expand a byte array output stream as is
-	necessary. */
+    /* This operation should only require one fill. In that typical
+    case we optimize allocation and copy of the byte array. In the
+    edge case where more than one fill is required then we take a
+    slower path and expand a byte array output stream as is
+    necessary. */
 
-	ensureFill();
+    ensureFill();
 
-	int pos = count;
-	final byte[] buf = this.buf;
-	while (true) {
-	    if (pos == limit) {
-		return readLineBytesSlowly();
-	    }
+    int pos = count;
+    final byte[] buf = this.buf;
+    while (true) {
+        if (pos == limit) {
+        return readLineBytesSlowly();
+        }
 
-	    if (buf[pos++] == '\r') {
-		if (pos == limit) {
-		    return readLineBytesSlowly();
-		}
+        if (buf[pos++] == '\r') {
+        if (pos == limit) {
+            return readLineBytesSlowly();
+        }
 
-		if (buf[pos++] == '\n') {
-		    break;
-		}
-	    }
-	}
+        if (buf[pos++] == '\n') {
+            break;
+        }
+        }
+    }
 
-	final int N = (pos - count) - 2;
-	final byte[] line = new byte[N];
-	System.arraycopy(buf, count, line, 0, N);
-	count = pos;
-	return line;
+    final int N = (pos - count) - 2;
+    final byte[] line = new byte[N];
+    System.arraycopy(buf, count, line, 0, N);
+    count = pos;
+    return line;
     }
 
     /**
@@ -117,80 +117,80 @@ public class RedisInputStream extends FilterInputStream {
      * into a String.
      */
     private byte[] readLineBytesSlowly() {
-	ByteArrayOutputStream bout = null;
-	while (true) {
-	    ensureFill();
+    ByteArrayOutputStream bout = null;
+    while (true) {
+        ensureFill();
 
-	    byte b = buf[count++];
-	    if (b == '\r') {
-		ensureFill(); // Must be one more byte
+        byte b = buf[count++];
+        if (b == '\r') {
+        ensureFill(); // Must be one more byte
 
-		byte c = buf[count++];
-		if (c == '\n') {
-		    break;
-		}
+        byte c = buf[count++];
+        if (c == '\n') {
+            break;
+        }
 
-		if (bout == null) {
-		    bout = new ByteArrayOutputStream(16);
-		}
+        if (bout == null) {
+            bout = new ByteArrayOutputStream(16);
+        }
 
-		bout.write(b);
-		bout.write(c);
-	    } else {
-		if (bout == null) {
-		    bout = new ByteArrayOutputStream(16);
-		}
+        bout.write(b);
+        bout.write(c);
+        } else {
+        if (bout == null) {
+            bout = new ByteArrayOutputStream(16);
+        }
 
-		bout.write(b);
-	    }
-	}
+        bout.write(b);
+        }
+    }
 
-	return bout == null ? new byte[0] : bout.toByteArray();
+    return bout == null ? new byte[0] : bout.toByteArray();
     }
 
     public int readIntCrLf() {
-	return (int)readLongCrLf();
+    return (int)readLongCrLf();
     }
 
     public long readLongCrLf() {
-	final byte[] buf = this.buf;
+    final byte[] buf = this.buf;
 
-	ensureFill();
+    ensureFill();
 
-	final boolean isNeg = buf[count] == '-';
-	if (isNeg) {
-	    ++count;
-	}
+    final boolean isNeg = buf[count] == '-';
+    if (isNeg) {
+        ++count;
+    }
 
-	long value = 0;
-	while (true) {
-	    ensureFill();
+    long value = 0;
+    while (true) {
+        ensureFill();
 
-	    final int b = buf[count++];
-	    if (b == '\r') {
-		ensureFill();
+        final int b = buf[count++];
+        if (b == '\r') {
+        ensureFill();
 
-		if (buf[count++] != '\n') {
-		    throw new JedisConnectionException("Unexpected character!");
-		}
+        if (buf[count++] != '\n') {
+            throw new JedisConnectionException("Unexpected character!");
+        }
 
-		break;
-	    }
-	    else {
-		value = value * 10 + b - '0';
-	    }
-	}
+        break;
+        }
+        else {
+        value = value * 10 + b - '0';
+        }
+    }
 
-	return (isNeg ? -value : value);
+    return (isNeg ? -value : value);
     }
 
     public int read(byte[] b, int off, int len) throws JedisConnectionException {
-	ensureFill();
+    ensureFill();
 
-	final int length = Math.min(limit - count, len);
-	System.arraycopy(buf, count, b, off, length);
-	count += length;
-	return length;
+    final int length = Math.min(limit - count, len);
+    System.arraycopy(buf, count, b, off, length);
+    count += length;
+    return length;
     }
 
     /**
@@ -199,16 +199,16 @@ public class RedisInputStream extends FilterInputStream {
      * was smaller than expected.
      */
     private void ensureFill() throws JedisConnectionException {
-	if (count >= limit) {
-	    try {
-		limit = in.read(buf);
-		count = 0;
-		if (limit == -1) {
-		    throw new JedisConnectionException("Unexpected end of stream.");
-		}
-	    } catch (IOException e) {
-		throw new JedisConnectionException(e);
-	    }
-	}
+    if (count >= limit) {
+        try {
+        limit = in.read(buf);
+        count = 0;
+        if (limit == -1) {
+            throw new JedisConnectionException("Unexpected end of stream.");
+        }
+        } catch (IOException e) {
+        throw new JedisConnectionException(e);
+        }
+    }
     }
 }

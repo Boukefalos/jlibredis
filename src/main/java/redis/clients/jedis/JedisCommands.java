@@ -157,38 +157,38 @@ public interface JedisCommands {
     Set<String> zrevrangeByScore(String key, double max, double min);
 
     Set<String> zrangeByScore(String key, double min, double max, int offset,
-	    int count);
+        int count);
 
     Set<String> zrevrangeByScore(String key, String max, String min);
 
     Set<String> zrangeByScore(String key, String min, String max, int offset,
-	    int count);
+        int count);
 
     Set<String> zrevrangeByScore(String key, double max, double min,
-	    int offset, int count);
+        int offset, int count);
 
     Set<Tuple> zrangeByScoreWithScores(String key, double min, double max);
 
     Set<Tuple> zrevrangeByScoreWithScores(String key, double max, double min);
 
     Set<Tuple> zrangeByScoreWithScores(String key, double min, double max,
-	    int offset, int count);
+        int offset, int count);
 
     Set<String> zrevrangeByScore(String key, String max, String min,
-	    int offset, int count);
+        int offset, int count);
 
     Set<Tuple> zrangeByScoreWithScores(String key, String min, String max);
 
     Set<Tuple> zrevrangeByScoreWithScores(String key, String max, String min);
 
     Set<Tuple> zrangeByScoreWithScores(String key, String min, String max,
-	    int offset, int count);
+        int offset, int count);
 
     Set<Tuple> zrevrangeByScoreWithScores(String key, double max, double min,
-	    int offset, int count);
+        int offset, int count);
 
     Set<Tuple> zrevrangeByScoreWithScores(String key, String max, String min,
-	    int offset, int count);
+        int offset, int count);
 
     Long zremrangeByRank(String key, long start, long end);
 
@@ -201,18 +201,18 @@ public interface JedisCommands {
     Set<String> zrangeByLex(final String key, final String min, final String max);
 
     Set<String> zrangeByLex(final String key, final String min,
-	    final String max, final int offset, final int count);
+        final String max, final int offset, final int count);
 
     Set<String> zrevrangeByLex(final String key, final String max,
-	    final String min);
+        final String min);
 
     Set<String> zrevrangeByLex(final String key, final String max,
-	    final String min, final int offset, final int count);
+        final String min, final int offset, final int count);
 
     Long zremrangeByLex(final String key, final String min, final String max);
 
     Long linsert(String key, Client.LIST_POSITION where, String pivot,
-	    String value);
+        String value);
 
     Long lpushx(String key, String... string);
 
@@ -245,7 +245,7 @@ public interface JedisCommands {
     Long bitcount(final String key, long start, long end);
 
     ScanResult<Map.Entry<String, String>> hscan(final String key,
-	    final String cursor);
+        final String cursor);
 
     ScanResult<String> sscan(final String key, final String cursor);
 

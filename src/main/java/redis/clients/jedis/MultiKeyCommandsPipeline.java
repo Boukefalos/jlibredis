@@ -39,7 +39,7 @@ public interface MultiKeyCommandsPipeline {
     Response<Long> smove(String srckey, String dstkey, String member);
 
     Response<Long> sort(String key, SortingParams sortingParameters,
-	    String dstkey);
+        String dstkey);
 
     Response<Long> sort(String key, String dstkey);
 
